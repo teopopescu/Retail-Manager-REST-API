@@ -1,5 +1,6 @@
 package com.db.devchallenge;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
@@ -13,8 +14,8 @@ public class LocationServiceTest {
 	@Test
 	public void getWestfieldGeolocation()  //E20 1EJ 
 	{
-	GeoLocation results= locationService.getGeolocation("E20 1EJ");
-	assertThat().isEqualTo(56.874584);
+	GeoLocation results= locationService.getGeoLocation("E20 1EJ");
+	assertThat(results.getLatitude()).isEqualTo(56.874584);
 	}
 	
 	@Test

@@ -26,12 +26,12 @@ public class Shop {
 	        System.out.println("Name, Address, and Postcode");
 	        System.out.println(name + "\t" + address + "\t" + postcode2);
 	    }
-	    public void Shop(String n, String a, String p)
+	    public void Shop(String name, String address, String postcode)
 	    {
 	    	
-	    	name =n;
-	    	address=a;
-	    	postcode2=p;
+	    	name =name;
+	    	address=address;
+	    	postcode2=postcode;
 	    	
 	    }
 	    public void setShopName(String newShopName) {

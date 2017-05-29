@@ -5,6 +5,7 @@ import com.db.devchallenge.model.Shop;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import com.db.devchallenge.ShopsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,17 +23,18 @@ public class ShopsController {
 	
 	 ArrayList<Shop> shopsList = new ArrayList<Shop>(); 
 	 
+	 
 	public ShopsController() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
- 
   @Autowired
-  private ShopsRepository shopsRepository;
+ // take out from comment and solve issue private ShopsRepository shopsRepository;
  
-  @RequestMapping(method = RequestMethod.GET)
-  @ResponseBody
+
+  @RequestMapping(method = RequestMethod.GET)  
+  @ResponseBody 
   public List<Shop> getAllShops()  {
 	  
 	  for (Shop eachShop: shopsList) { 
@@ -68,24 +70,6 @@ public class ShopsController {
 	   Shop firstShop = new Shop(name,address,postcode2);
 	   aShopObject.addShop(firstShop);
        
-      
-       
-      
-     /*
-     Shop Shop1 = new Shop();
-
-     Shop1.setShopName("Vodafone");
-     Shop1.setShopAddress("Westfield Stratford");
-     Shop1.setShopPostcode("");
-    
-     shopsList.add(Shop1);
-
-     Shop Shop2 = new Shop();
-
-     Shop2.setShopName("");
-     Shop2.setShopAddress("");
-     Shop2.setShopPostcode("");
-*/
      System.out.println();
      System.out.println("Add new shops: ");
      System.out.println("Enter number of shops to be added: ");

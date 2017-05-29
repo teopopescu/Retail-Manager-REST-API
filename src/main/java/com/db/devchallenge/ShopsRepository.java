@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
  
 //View
+
 public class ShopsRepository  {
 
-	//I don't really understand what should i put in the view since the output format for Spring is in the controller; 
 	
 	
  }

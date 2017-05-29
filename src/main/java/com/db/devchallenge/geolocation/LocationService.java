@@ -4,8 +4,8 @@ import com.google.maps.errors.ApiException;
 
 public interface LocationService {
 
-	public LocationServiceGMaps getGeolocation(String postcode); 
-		
+	//public LocationServiceGMaps getGeolocation(String postcode); 
+		GeoLocation getGeoLocation(String poscode);
 }
 
 

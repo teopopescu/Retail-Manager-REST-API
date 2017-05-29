@@ -26,7 +26,9 @@ import org.springframework.http.ResponseEntity;
 */
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.db.devchallenge.geolocation.GeoLocation;
 import com.db.devchallenge.geolocation.LocationService;
@@ -34,11 +36,13 @@ import com.db.devchallenge.geolocation.LocationServiceGMaps;
 
  
 @SpringBootApplication
+@EnableAutoConfiguration
+@ComponentScan
 public class GradleFilesApplication1 {
  
   public static void main(String[] args) throws Exception {
     SpringApplication.run(GradleFilesApplication1.class, args);
-    
+    /*
     String postcode;
     
    Scanner scan= new Scanner(System.in);
@@ -46,15 +50,9 @@ public class GradleFilesApplication1 {
    postcode=scan.next();
    LocationServiceGMaps test = new LocationServiceGMaps();
   
-   test.getGeolocation(postcode);
- 
+   test.getGeoLocation(postcode);
+ */
     
   }
  
 }
-
-	
-	
-	
-	
-	
