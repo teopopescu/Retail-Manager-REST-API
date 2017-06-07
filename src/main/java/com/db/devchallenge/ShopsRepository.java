@@ -48,11 +48,11 @@ public class ShopsRepository  {
 	
 	{  
 
-	allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E161XD"));
-		allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW61TU"));
+	allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E161XD",20,40));
+		allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW61TU",50,100));
 		//allShops.put("Zara", new Shop("Zara", "Solent Road", "NW61BT",oneLocation.getGeoLocation("NW61BT").getLatitude(),oneLocation.getGeoLocation("NW61BT").getLongitude() ));
 		allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road", "SW71AJ"));
-		allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
+		ShopsRepository.allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
 		
 	}
 	

@@ -66,7 +66,20 @@ public class ShopsController {
 
 		Shop finalReturnShop = new Shop();
 		double nearestDistance = Double.MAX_VALUE;
+		
+		for (Map.Entry<String, Shop> entry : ShopsRepository.allShops.entrySet()) {
+			
+				
+			calculatedDistance = locationVariable.haversine(entry.getValue().getLatitude(), entry.getValue().getLongitude(), lat, lng);
+			
+			if (calculatedDistance <= nearestDistance) {
+				nearestDistance = calculatedDistance;
+				finalReturnShop = entry.getValue();
+			}
+			
+		}
 
+		/*
 		for (Map.Entry<String, Shop> entry : ShopsRepository.allShops.entrySet()) {
 
 			GeoLocation location = locationVariable.getGeoLocation(entry.getValue().getShopPostcode());
@@ -76,8 +89,9 @@ public class ShopsController {
 			if (calculatedDistance <= nearestDistance) {
 				nearestDistance = calculatedDistance;
 				finalReturnShop = entry.getValue();
+				
 			}
-		}
+		}*/
 		return finalReturnShop; // return finalReturnShop
 
 	}

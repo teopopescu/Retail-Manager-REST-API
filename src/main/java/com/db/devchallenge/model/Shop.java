@@ -11,6 +11,12 @@ import com.db.devchallenge.geolocation.LocationServiceGMaps;
  * nearestShop null object: I am not doing anything with the calculatedDistance; 
  * look at POST method; if doing  POST on Postman, nothing happens and server crashes; 
  * 
+ * Tonight
+ * Step 1: get shops with lat and lng in JSON 
+ * Step 2: get lat and lng to be updated
+ * Step 3: Get nearest shop
+ * Step 4: Post shop
+ * 
  * 
  * Next steps by Friday:
  * -implement changes
@@ -26,28 +32,31 @@ public class Shop {
 	private String postcode2;
 	private double latitude;
 	private double longitude;
+	private LocationServiceGMaps locationVariable1;
+
 
 	public Shop() {
 
 		this.name = null;
 		this.address = null;
 		this.postcode2 = null;
-		this.latitude = 0;
-		this.longitude = 0;
+		this.latitude =1;
+		this.longitude =0;
 
 	}
 
-	private LocationServiceGMaps locationVariable1;
-
+	
 	public Shop(String newName, String newAddress, String newPostcode, double newLat, double newLng) {
 
 		name = newName;
 		address = newAddress;
 		postcode2 = newPostcode;
-		latitude = locationVariable1.getGeoLocation(newPostcode).getLatitude();
-		newLat = latitude;
-		longitude = locationVariable1.getGeoLocation(newPostcode).getLongitude();
-		newLng = longitude;
+		latitude=newLat;
+		longitude=newLng;
+		//locationVariable1.getGeoLocation(newPostcode).getLatitude();
+		//latitude=newLat;
+		//longitude = locationVariable1.getGeoLocation(newPostcode).getLongitude();
+		//newLng = locationVariable1.getGeoLocation(newPostcode).getLongitude();
 	}
 
 	public Shop(String newName, String newAddress, String newPostcode) {
@@ -55,8 +64,8 @@ public class Shop {
 		name = newName;
 		address = newAddress;
 		postcode2 = newPostcode;
-		longitude = locationVariable1.getGeoLocation(newPostcode).getLatitude();
-		latitude = locationVariable1.getGeoLocation(newPostcode).getLongitude();
+		// v1 longitude = locationVariable1.getGeoLocation(newPostcode).getLatitude();
+		//latitude = locationVariable1.getGeoLocation(newPostcode).getLongitude();
 		// use setters?
 	}
 
