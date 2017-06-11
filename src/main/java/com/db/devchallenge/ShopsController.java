@@ -6,6 +6,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +30,6 @@ public class ShopsController {
 	@Autowired
 	private ShopsRepository shopsRepository;
 
-	//public static final HashMap<String, Shop> nearestShopMap = new HashMap<String, Shop>(100);
-
 	@RequestMapping(value = "/shops", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Shop> getAllShops() {
@@ -38,20 +39,42 @@ public class ShopsController {
 
 	}
 
-	private LocationServiceGMaps locationVariable3;
+	/*
+	 * @RequestMapping(value = "/shops", method = RequestMethod.POST, consumes =
+	 * "application/json", produces = "application/json") //@ResponseBody
+	 * //public ResponseEntity<Shop> addShop( @RequestBody String shopName,
+	 * String shopAddress, String shopPostcode) { public ResponseEntity<Shop>
+	 * addShop( @RequestBody Shop shop1) {
+	 * 
+	 * /* String shopName="Deutsche Bank"; String
+	 * shopAddress="10 Upper Bank Street"; String shopPostcode="E14 5BT";
+	 * 
+	 * shop1.setShopName(shopName); shop1.setShopAddress(shopAddress);
+	 * shop1.setShopPostcode(shopPostcode);
+	 * 
+	 * ShopsRepository.allShops.put(shopName, shop1);
+	 * 
+	 * return new ResponseEntity<Shop>(shop1, HttpStatus.OK); }
+	 * 
+	 * @RequestMapping(value="/shops", method=RequestMethod.POST) public void
+	 * add(@RequestBody Shop shop1) { Shop model = new Shop();
+	 * model.setShopName(shop1.getShopName());
+	 * model.setShopAddress(shop1.getShopAddress());
+	 * model.setShopPostcode(shop1.getShopPostcode());
+	 * 
+	 * ShopsRepository.allShops.put(model.getShopName(), model);
+	 * 
+	 * 
+	 * }
+	 *
+	 *
+	 */
 
-	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<Shop> addShop(String shopName, String shopAddress, String shopPostcode) {
+	@RequestMapping(value = "/shops", method = RequestMethod.POST)
+	public void addShop(@RequestBody Shop shop) {
 
-		// ShopsRepository.allShops.put(shopName, new Shop(shopName,
-		// shopAddress, shopPostcode,
-		// locationVariable3.getGeoLocation(shopPostcode).getLatitude(),locationVariable3.getGeoLocation(shopPostcode).getLongitude()
-		// ));
-		ShopsRepository.allShops.put(shopName, new Shop(shopName, shopAddress, shopPostcode));
+		shopsRepository.addShop(shop);
 
-		return new ResponseEntity<Shop>(ShopsRepository.allShops.get(getAllShops()), HttpStatus.OK);
-		// definitely not the right version;
 	}
 
 	@Autowired
@@ -66,49 +89,20 @@ public class ShopsController {
 
 		Shop finalReturnShop = new Shop();
 		double nearestDistance = Double.MAX_VALUE;
-		
+
 		for (Map.Entry<String, Shop> entry : ShopsRepository.allShops.entrySet()) {
-			
-				
-			calculatedDistance = locationVariable.haversine(entry.getValue().getLatitude(), entry.getValue().getLongitude(), lat, lng);
-			
+
+			calculatedDistance = locationVariable.haversine(entry.getValue().getLatitude(),
+					entry.getValue().getLongitude(), lat, lng);
+
 			if (calculatedDistance <= nearestDistance) {
 				nearestDistance = calculatedDistance;
 				finalReturnShop = entry.getValue();
 			}
-			
+
 		}
 
-		/*
-		for (Map.Entry<String, Shop> entry : ShopsRepository.allShops.entrySet()) {
-
-			GeoLocation location = locationVariable.getGeoLocation(entry.getValue().getShopPostcode());
-			calculatedDistance = locationVariable.haversine(location.getLatitude(), location.getLongitude(), lat, lng);
-			// finalReturnShop=entry.getValue();
-
-			if (calculatedDistance <= nearestDistance) {
-				nearestDistance = calculatedDistance;
-				finalReturnShop = entry.getValue();
-				
-			}
-		}*/
-		return finalReturnShop; // return finalReturnShop
+		return finalReturnShop;
 
 	}
 }
-
-/*
- * 
- * // this is the shop postcode:
- * ShopsRepository.allShops.get(getAllShops()).getShopPostcode()
- * 
- * public HashMap<String,Shop> showAllShops( HashMap<String, Shop> ashopsMap ) {
- * 
- * return aShopsMap;
- * 
- * 
- * 
- * public void displayAllShops() { showAllShops(aShopsMap); } }
- * 
- * 
- */

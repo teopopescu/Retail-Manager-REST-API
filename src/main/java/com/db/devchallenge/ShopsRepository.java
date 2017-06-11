@@ -23,63 +23,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
- 
 
 @Component
-public class ShopsRepository  {
+public class ShopsRepository {
 
-	LocationServiceGMaps oneLocation;
-	
-	public static final HashMap<String,Shop> allShops = new HashMap<String, Shop>(100);
-	//make concurrent hashmap instead of just hashmap
-	
-	public void getAllShops()
-	{
-		for (Map.Entry<String, Shop> entry : allShops.entrySet())
-		{
+	public static final HashMap<String, Shop> allShops = new HashMap<String, Shop>(100);
+	// make concurrent hashmap instead of just hashmap
+
+	public void getAllShops() {
+		for (Map.Entry<String, Shop> entry : allShops.entrySet()) {
 			System.out.println("Shop:  " + entry.getKey() + ", Shop details = " + entry.getValue());
 		}
-		
-		
+
 	}
 
-	
 	public void someShops()
-	
-	{  
 
-	allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E161XD",20,40));
-		allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW61TU",50,100));
-		//allShops.put("Zara", new Shop("Zara", "Solent Road", "NW61BT",oneLocation.getGeoLocation("NW61BT").getLatitude(),oneLocation.getGeoLocation("NW61BT").getLongitude() ));
-		allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road", "SW71AJ"));
-		ShopsRepository.allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
-		
+	{
+
+		allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E16 1XD"));
+		allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW6 1TU"));
+		allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road", "SW7 1AJ"));
+		allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
+
 	}
-	
-	
-	
-	
- }
 
- 
+	public void addShop(Shop shop1) {
 
+		// shop1= new Shop("Key name", "address1", "E14 5BT");
+		allShops.put(shop1.getShopName(), shop1);
 
+	}
 
-  
-
-      
-
-    
-       
-   
-
-
-
-  
-  
- 
-
-
-	
-
-
+}
