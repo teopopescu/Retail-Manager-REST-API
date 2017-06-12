@@ -40,46 +40,11 @@ public class ShopsController {
 
 	}
 
-	/*
-	 * @RequestMapping(value = "/shops", method = RequestMethod.POST, consumes =
-	 * "application/json", produces = "application/json") //@ResponseBody
-	 * //public ResponseEntity<Shop> addShop( @RequestBody String shopName,
-	 * String shopAddress, String shopPostcode) { public ResponseEntity<Shop>
-	 * addShop( @RequestBody Shop shop1) {
-	 * 
-	 * /* String shopName="Deutsche Bank"; String
-	 * shopAddress="10 Upper Bank Street"; String shopPostcode="E14 5BT";
-	 * 
-	 * shop1.setShopName(shopName); shop1.setShopAddress(shopAddress);
-	 * shop1.setShopPostcode(shopPostcode);
-	 * 
-	 * ShopsRepository.allShops.put(shopName, shop1);
-	 * 
-	 * return new ResponseEntity<Shop>(shop1, HttpStatus.OK); }
-	 * 
-	 * @RequestMapping(value="/shops", method=RequestMethod.POST) public void
-	 * add(@RequestBody Shop shop1) { Shop model = new Shop();
-	 * model.setShopName(shop1.getShopName());
-	 * model.setShopAddress(shop1.getShopAddress());
-	 * model.setShopPostcode(shop1.getShopPostcode());
-	 * 
-	 * ShopsRepository.allShops.put(model.getShopName(), model);
-	 * 
-	 * 
-	 * }
-	 *
-	 *
-	 */
-
 	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addShop(@RequestBody Shop shop) {
 System.out.println("Adding shop " + shop);
 		shopsRepository.addShop(shop);
 		
-		//GeoLocation geolocation = locationService.getGeoLocation(newPostcode);
-		//latitude = geolocation.getLatitude();
-
-		//longitude = geolocation.getLongitude();
 
 	}
 
@@ -89,8 +54,8 @@ System.out.println("Adding shop " + shop);
 
 	@RequestMapping(value = "/shops/findNearest", method = RequestMethod.GET)
 	@ResponseBody
-	public Shop getNearestShop(@RequestParam("lat") double lat, @RequestParam("lng") double lng) // public
-																									// Shop
+	public Shop getNearestShop(@RequestParam("lat") double lat, @RequestParam("lng") double lng) 
+																									
 	{
 
 		Shop finalReturnShop = null;

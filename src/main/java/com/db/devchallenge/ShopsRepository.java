@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Component
 public class ShopsRepository {
+	
+	private LocationServiceGMaps locationService = new LocationServiceGMaps();
 
 	public static final HashMap<String, Shop> allShops = new HashMap<String, Shop>(100);
 	// make concurrent hashmap instead of just hashmap
@@ -50,7 +52,11 @@ public class ShopsRepository {
 
 	public void addShop(Shop shop1) {
 
-		// shop1= new Shop("Key name", "address1", "E14 5BT");
+		GeoLocation geolocation = locationService.getGeoLocation(shop1.getPostcode());
+		shop1.setLatitude(geolocation.getLatitude()); 
+		shop1.setLongitude(geolocation.getLongitude());
+	
+		
 		allShops.put(shop1.getName(), shop1);
 
 	}
