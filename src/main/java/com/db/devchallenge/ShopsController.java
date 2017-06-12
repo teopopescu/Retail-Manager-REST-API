@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -70,10 +71,15 @@ public class ShopsController {
 	 *
 	 */
 
-	@RequestMapping(value = "/shops", method = RequestMethod.POST)
+	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addShop(@RequestBody Shop shop) {
-
+System.out.println("Adding shop " + shop);
 		shopsRepository.addShop(shop);
+		
+		//GeoLocation geolocation = locationService.getGeoLocation(newPostcode);
+		//latitude = geolocation.getLatitude();
+
+		//longitude = geolocation.getLongitude();
 
 	}
 
@@ -87,7 +93,7 @@ public class ShopsController {
 																									// Shop
 	{
 
-		Shop finalReturnShop = new Shop();
+		Shop finalReturnShop = null;
 		double nearestDistance = Double.MAX_VALUE;
 
 		for (Map.Entry<String, Shop> entry : ShopsRepository.allShops.entrySet()) {

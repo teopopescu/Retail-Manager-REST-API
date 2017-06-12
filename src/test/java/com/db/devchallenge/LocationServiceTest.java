@@ -11,7 +11,7 @@ import com.db.devchallenge.geolocation.LocationServiceGMaps;
 
 public class LocationServiceTest {
 
-	private LocationService locationService;
+	private LocationServiceGMaps locationService = new LocationServiceGMaps();
 
 	@Test
 	public void getWestfieldGeolocation() // E20 1EJ

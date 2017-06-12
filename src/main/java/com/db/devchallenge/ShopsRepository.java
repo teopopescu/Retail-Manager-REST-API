@@ -41,17 +41,17 @@ public class ShopsRepository {
 
 	{
 
-		allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E16 1XD"));
-		allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW6 1TU"));
-		allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road", "SW7 1AJ"));
-		allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
+		//allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E16 1XD"));
+		//allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW6 1TU"));
+		//allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road", "SW7 1AJ"));
+		//allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
 
 	}
 
 	public void addShop(Shop shop1) {
 
 		// shop1= new Shop("Key name", "address1", "E14 5BT");
-		allShops.put(shop1.getShopName(), shop1);
+		allShops.put(shop1.getName(), shop1);
 
 	}
 
