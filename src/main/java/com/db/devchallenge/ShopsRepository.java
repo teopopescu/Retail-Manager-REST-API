@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Component
 public class ShopsRepository {
-	
+
 	private LocationServiceGMaps locationService = new LocationServiceGMaps();
 
 	public static final HashMap<String, Shop> allShops = new HashMap<String, Shop>(100);
@@ -43,20 +43,22 @@ public class ShopsRepository {
 
 	{
 
-		//allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E16 1XD"));
-		//allShops.put("Tesco", new Shop("Tesco", "Marylebone High Street", "NW6 1TU"));
-		//allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road", "SW7 1AJ"));
-		//allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street", "E10 4BT"));
+		// allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E16
+		// 1XD"));
+		allShops.put("Tesco", new Shop());
+		// allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road",
+		// "SW7 1AJ"));
+		// allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street",
+		// "E10 4BT"));
 
 	}
 
 	public void addShop(Shop shop1) {
 
 		GeoLocation geolocation = locationService.getGeoLocation(shop1.getPostcode());
-		shop1.setLatitude(geolocation.getLatitude()); 
+		shop1.setLatitude(geolocation.getLatitude());
 		shop1.setLongitude(geolocation.getLongitude());
-	
-		
+
 		allShops.put(shop1.getName(), shop1);
 
 	}

@@ -8,11 +8,14 @@ import com.db.devchallenge.geolocation.LocationServiceGMaps;
 
 public class Shop {
 
-	
-	@Override
-	public String toString() {
-		return "Shop [name=" + name + ", address=" + address + ", postcode=" + postcode + ", latitude=" + latitude
-				+ ", longitude=" + longitude + "]";
+	private String name;
+	private String address;
+	private String postcode;
+	private double latitude;
+	private double longitude;
+
+	public Shop() {
+
 	}
 
 	public String getName() {
@@ -55,36 +58,10 @@ public class Shop {
 		this.longitude = longitude;
 	}
 
-	private String name;
-	private String address;
-	private String postcode;
-	private double latitude;
-	private double longitude;
-
-	//private LocationServiceGMaps locationService = new LocationServiceGMaps();
-
-	
-/*
-
-	
-
-	public Shop(String newName, String newAddress, String newPostcode) {
-
-		name = newName;
-		address = newAddress;
-		postcode = newPostcode;
-
-		GeoLocation geolocation = locationService.getGeoLocation(newPostcode);
-		latitude = geolocation.getLatitude();
-
-		longitude = geolocation.getLongitude();
-
+	@Override
+	public String toString() {
+		return "Shop [name=" + name + ", address=" + address + ", postcode=" + postcode + ", latitude=" + latitude
+				+ ", longitude=" + longitude + "]";
 	}
-	*/
-	public Shop(){
-		System.out.println("Called constructor");
-		
-	}
-	
-	
+
 }

@@ -42,9 +42,8 @@ public class ShopsController {
 
 	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addShop(@RequestBody Shop shop) {
-System.out.println("Adding shop " + shop);
+		System.out.println("Adding shop " + shop);
 		shopsRepository.addShop(shop);
-		
 
 	}
 
@@ -54,8 +53,8 @@ System.out.println("Adding shop " + shop);
 
 	@RequestMapping(value = "/shops/findNearest", method = RequestMethod.GET)
 	@ResponseBody
-	public Shop getNearestShop(@RequestParam("lat") double lat, @RequestParam("lng") double lng) 
-																									
+	public Shop getNearestShop(@RequestParam("lat") double lat, @RequestParam("lng") double lng)
+
 	{
 
 		Shop finalReturnShop = null;
