@@ -8,6 +8,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,6 +18,7 @@ import java.nio.charset.Charset;
 import javax.servlet.ServletContext;
 import javax.swing.text.AbstractDocument.Content;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,12 +40,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.db.devchallenge.model.Shop;
+import com.db.devchallenge.ShopsRepository;
 
 import junit.framework.Assert;
 
 /*
-Questions
- -do I need to get tests for each JSON parameter? see get methods
 
 */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,84 +56,114 @@ public class ShopsControllerTest {
 	private WebApplicationContext wac;
 
 	private MockMvc mockMvc;
+	private ShopsRepository shopsRepository = new ShopsRepository();
 
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+		
 	}
+	
+	
+	//FIX POST METHOD x
+	//FIX GEOLOCATION NULLPOINTER  x 
+	// test Get all shops x
+	//in @After clear the data in tests x 
+	// each test uses data for different shops; put shosprepositroy.someshops in shopsrepository constructor; x
+	//CLEAN CODE  x
+	// use concurrent hashmap; <-- it has atomic operations : you can PUT and GET the previous value; x 
+	
+	// _________________
+	
+	// Read section on Java Concurrency in Practice;
+	// read about concurrent HashMap; what methods it has, what guarantees, what
+		// it doesn't guarantee; <=- understand it pretty well;
+	
 
-	// test Get all shops
+	// update Shop but return previous version of Shop to the client (for
+	// example, postcode1 (old) and postcode2 (new) <--stored in the map but
+	// postcode1 will be returned to client;
+	
+	
+	
+	//do the concurrent test:  // try to do the concurrent test: the PUT and GET previous version;
+	 //submit final version to GitHub on Sunday; 
+	
+
 	@Test
-	public void testGetShops() throws Exception {
+	public void testGetShops() throws Exception { // APPLICATION_JSON_UTF8
 		mockMvc.perform(MockMvcRequestBuilders.get("/shops").accept(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Tesco"));
-				// .andExpect(MockMvcResultMatchers.content().json(" ")); <-- or like this?
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
+				.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
+				.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ"));
+		
 
 	}
 
-	// Test post shop
+
 	@Test
 	public void testPostShop() throws Exception {
 
-		mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+		mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"json\":\"request\"}"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
-
+		
 	}
 
 	// Test Nearest shop
 	@Test
 	public void testNearestShop() throws Exception {
-		mockMvc.perform(get("/shops/findNearest").param("lat", "23").param("lng", "46")).andDo(print())
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(MockMvcResultMatchers.content().json(" "));
-		// .andExpect(jsonPath("$.name").value("Tesco")); <-- but what is wrong with this?
+		mockMvc.perform(MockMvcRequestBuilders.get("/shops/findNearest").accept(MediaType.APPLICATION_JSON_VALUE)
+				.param("lat", "23").param("lng", "46")).andExpect(MockMvcResultMatchers.status().isOk())
+				// .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"));
+		
 	}
 	
-/*	Comments 
-    ________________________
-  
-  
- 
-// find nearest shops test
-	@Test
-	public void getNearestShopTest() {
-		this.mockMvc.perform(get("/shops/findNearest").param("lat", "23").param("lng", "46")).andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(jsonPath("$.name").value("Tesco"));
-	}*/
-
-	/*
 	
-	  
-	// test Get all shops
-	 * 
-	 *  * // Taken from Spring Integration Testing documentation!!!
-	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8")); 
-	 * 
-	@Test
-	public void testGetShops() throws Exception {
+	@Test 
+	public void testConcurrency() throws Exception
+	{
+		/*
+		mockMvc.perform(MockMvcRequestBuilders.get("/shops").accept(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+		.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
+		.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
+		.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ"));
+		
+		mockMvc.perform(put("/shops").contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE).content("{\"name\":\"Tesco\"}"))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		//.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+		.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
+		.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
+		.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ")); */
+		/*
+		mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE).content("{\"name\":\"Tesco\"}"))
+		.andExpect(MockMvcResultMatchers.status().isOk());
+		*/
+		
+		
+		
+	}
+		
+		/*
+		 
+//"{\"name\":\"Tesco\", \"address\":\"Hoy street\", \"postcode\":\"E16 1XD\" }"
 
-		mockMvc.perform(get("/shops")).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType))
-				// .andExpect(content().contentType("application/json")) //this
-				.andExpect(jsonPath("$.name", is("Tesco")));
-				// .andExpect(jsonPath("$.name").value("Tesco"));
-				  }
-*/
-	/*
-	// Post method test
-	@Test
-	public void postShopTest() {
-		String json = content().contentType(MediaType.APPLICATION_JSON_VALUE); // this is the problem 
-																			
-		mockMvc.perform(
-				post("/shops").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
-	}*/
+"{
+\"name\": \"Tesco\",
+\"address\": \"Hoy Street\",
+\"postcode\": \"E16 1XD\"
+}"
+
+*/	
+	@After
+	public void delete() {
+		ShopsRepository.allShops.remove(shopsRepository); 
+															
+	}
 	
+
 }

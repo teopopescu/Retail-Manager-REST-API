@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.apache.log4j.spi.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,9 +33,12 @@ public class LocationServiceGMaps implements LocationService {
 	public GeoLocation getGeoLocation(String postcode) {
 
 		GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyDRfDEfT8_yzJsneS3CwodB8UDotytBB8E");
+		
 		GeocodingResult[] results = null;
+	
 		try {
 			results = GeocodingApi.geocode(context, postcode).await();
+
 		} catch (ApiException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +51,7 @@ public class LocationServiceGMaps implements LocationService {
 		}
 
 		GeoLocation object2 = new GeoLocation(results[0].geometry.location.lng, results[0].geometry.location.lat);
-
+		
 		return object2;
 	}
 

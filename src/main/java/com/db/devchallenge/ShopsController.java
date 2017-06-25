@@ -2,6 +2,7 @@ package com.db.devchallenge;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,25 +34,37 @@ public class ShopsController {
 
 	@RequestMapping(value = "/shops", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, Shop> getAllShops() {
+	public ConcurrentHashMap<String, Shop> getAllShops() {
 
 		shopsRepository.someShops();
 		return ShopsRepository.allShops;
-
+	
 	}
+	
 
 	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addShop(@RequestBody Shop shop) {
-		System.out.println("Adding shop " + shop);
-		shopsRepository.addShop(shop);
-
+		
+		shopsRepository.addShop1(shop); 
+		//shopsRepository.allShops.put(shop.getName(), shop);
 	}
+	
+	
+	@RequestMapping(value = "/shops", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void updateShop(@RequestBody Shop shop2) {
+		
+		shopsRepository.addShop1(shop2); 
+		
+		//ShopsRepository.allShops.put(shop2.getName(), shop2);
+	}
+	
+	
 
 	@Autowired
 	private LocationServiceGMaps locationVariable;
 	double calculatedDistance = 0;
 
-	@RequestMapping(value = "/shops/findNearest", method = RequestMethod.GET)
+	@RequestMapping(value = "/shops/findNearest", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public Shop getNearestShop(@RequestParam("lat") double lat, @RequestParam("lng") double lng)
 

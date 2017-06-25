@@ -13,9 +13,11 @@ public class Shop {
 	private String postcode;
 	private double latitude;
 	private double longitude;
-
+	
+	
+	
 	public Shop() {
-
+	
 	}
 
 	public String getName() {

@@ -33,6 +33,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.db.devchallenge.geolocation.GeoLocation;
 import com.db.devchallenge.geolocation.LocationService;
 import com.db.devchallenge.geolocation.LocationServiceGMaps;
+import com.db.devchallenge.model.Shop;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -42,6 +43,8 @@ public class Application {
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Application.class, args);
 
+		
+		
 	}
 
 }

@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.concurrent.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,9 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopsRepository {
 
 	private LocationServiceGMaps locationService = new LocationServiceGMaps();
-
-	public static final HashMap<String, Shop> allShops = new HashMap<String, Shop>(100);
-	// make concurrent hashmap instead of just hashmap
+	public static final ConcurrentHashMap<String, Shop> allShops = new ConcurrentHashMap<String,Shop>(200);
+	
+	public ShopsRepository()
+	{
+		someShops();
+	}
+	
 
 	public void getAllShops() {
 		for (Map.Entry<String, Shop> entry : allShops.entrySet()) {
@@ -38,29 +43,33 @@ public class ShopsRepository {
 		}
 
 	}
+	
+	public void addShop1(Shop shop2) {
 
+		GeoLocation geolocation = locationService.getGeoLocation(shop2.getPostcode());
+
+		shop2.setLatitude(locationService.getGeoLocation(shop2.getPostcode()).getLatitude());
+		shop2.setLongitude(locationService.getGeoLocation(shop2.getPostcode()).getLongitude());
+		allShops.put(shop2.getName(), shop2);
+ 
+	}
+
+	
 	public void someShops()
 
 	{
-
-		// allShops.put("Vodafone", new Shop("Vodafone", "Edgware Road", "E16
-		// 1XD"));
-		allShops.put("Tesco", new Shop());
-		// allShops.put("Foot Locker", new Shop("Foot Locker", "Holmdale Road",
-		// "SW7 1AJ"));
-		// allShops.put("Adidas", new Shop("Adidas", "Hampstead High Street",
-		// "E10 4BT"));
-
-	}
-
-	public void addShop(Shop shop1) {
-
-		GeoLocation geolocation = locationService.getGeoLocation(shop1.getPostcode());
-		shop1.setLatitude(geolocation.getLatitude());
-		shop1.setLongitude(geolocation.getLongitude());
-
-		allShops.put(shop1.getName(), shop1);
+		Shop shop1 = new Shop();
+		
+	shop1.setName("Tesco");
+	shop1.setAddress("Address");
+	shop1.setPostcode("NW1 3HZ");
+	
+	
+		addShop1(shop1);
+		//allShops.put(shop1.getName(), shop1);
+		
 
 	}
 
+	
 }
