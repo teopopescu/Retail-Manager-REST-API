@@ -75,6 +75,9 @@ public class ShopsControllerTest {
 	// each test uses data for different shops; put shosprepositroy.someshops in shopsrepository constructor; x
 	//CLEAN CODE  x
 	// use concurrent hashmap; <-- it has atomic operations : you can PUT and GET the previous value; x 
+	// update Shop but return previous version of Shop to the client (for example, postcode1 (old) and postcode2 (new) <--stored in the map but x postcode1 will be returned to client; x
+		//do the concurrent test:  // try to do the concurrent test: the PUT and GET previous version; x
+		 //submit final version to GitHub on Sunday;  x 
 	
 	// _________________
 	
@@ -83,14 +86,7 @@ public class ShopsControllerTest {
 		// it doesn't guarantee; <=- understand it pretty well;
 	
 
-	// update Shop but return previous version of Shop to the client (for
-	// example, postcode1 (old) and postcode2 (new) <--stored in the map but
-	// postcode1 will be returned to client;
 	
-	
-	
-	//do the concurrent test:  // try to do the concurrent test: the PUT and GET previous version;
-	 //submit final version to GitHub on Sunday; 
 	
 
 	@Test
@@ -104,17 +100,6 @@ public class ShopsControllerTest {
 		
 
 	}
-
-/*
-	@Test
-	public void testPostShop() throws Exception {
-		
-		
-		  mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"json \":\"request\"}"))
-				.andExpect(MockMvcResultMatchers.status().isOk());
-		
-	}
-	*/
 	
 	@Test
 	public void testPostShop() throws Exception {
@@ -125,9 +110,6 @@ public class ShopsControllerTest {
 
 	}
 
-	
-	
-	// Test Nearest shop
 	@Test
 	public void testNearestShop() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/shops/findNearest").accept(MediaType.APPLICATION_JSON_VALUE)
@@ -137,31 +119,23 @@ public class ShopsControllerTest {
 		
 	}
 	
-	/*
+	
 	@Test 
 	public void testConcurrency() throws Exception
 	{
 		
-		mockMvc.perform(MockMvcRequestBuilders.get("/shops").accept(MediaType.APPLICATION_JSON_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
-		.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
-		.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
-		.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ"));
+		 mockMvc.perform(put("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16\"}"	))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 		
-		mockMvc.perform(put("/shops").contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE).content("{\"name\":\"Tesco\"}"))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		//.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
-		.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
-		.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ")); 
-		
-	}*/
-		
-		
+		 mockMvc.perform(MockMvcRequestBuilders.get("/shops").accept(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+			.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
+			.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
+			.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ"));
 		 
-//"{\"name\":\"Tesco\", \"address\":\"Hoy street\", \"postcode\":\"E16 1XD\" }"
-
+	}
+		
 	
 	@After
 	public void delete() {
