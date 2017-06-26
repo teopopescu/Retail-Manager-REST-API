@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
 import javax.servlet.ServletContext;
 import javax.swing.text.AbstractDocument.Content;
 
+import org.apache.catalina.mapper.Mapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,12 +58,14 @@ public class ShopsControllerTest {
 
 	private MockMvc mockMvc;
 	private ShopsRepository shopsRepository = new ShopsRepository();
+	private String json=" \"json\": \"request\"";
 
 	@Before
 	public void setup() throws Exception {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-		
+
 	}
+	
 	
 	
 	//FIX POST METHOD x
@@ -102,30 +105,43 @@ public class ShopsControllerTest {
 
 	}
 
-
+/*
 	@Test
 	public void testPostShop() throws Exception {
-
-		mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"json\":\"request\"}"))
+		
+		
+		  mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"json \":\"request\"}"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 		
 	}
+	*/
+	
+	@Test
+	public void testPostShop() throws Exception {
+		
+		
+		  mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16\"}"	))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
+	}
+
+	
+	
 	// Test Nearest shop
 	@Test
 	public void testNearestShop() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/shops/findNearest").accept(MediaType.APPLICATION_JSON_VALUE)
 				.param("lat", "23").param("lng", "46")).andExpect(MockMvcResultMatchers.status().isOk())
-				// .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"));
 		
 	}
 	
-	
+	/*
 	@Test 
 	public void testConcurrency() throws Exception
 	{
-		/*
+		
 		mockMvc.perform(MockMvcRequestBuilders.get("/shops").accept(MediaType.APPLICATION_JSON_VALUE))
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -138,27 +154,15 @@ public class ShopsControllerTest {
 		//.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
 		.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
 		.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
-		.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ")); */
-		/*
-		mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE).content("{\"name\":\"Tesco\"}"))
-		.andExpect(MockMvcResultMatchers.status().isOk());
-		*/
+		.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ")); 
+		
+	}*/
 		
 		
-		
-	}
-		
-		/*
 		 
 //"{\"name\":\"Tesco\", \"address\":\"Hoy street\", \"postcode\":\"E16 1XD\" }"
 
-"{
-\"name\": \"Tesco\",
-\"address\": \"Hoy Street\",
-\"postcode\": \"E16 1XD\"
-}"
-
-*/	
+	
 	@After
 	public void delete() {
 		ShopsRepository.allShops.remove(shopsRepository); 
