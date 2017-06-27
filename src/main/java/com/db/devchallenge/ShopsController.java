@@ -36,7 +36,7 @@ public class ShopsController {
 	@ResponseBody
 	public ConcurrentHashMap<String, Shop> getAllShops() {
 
-		shopsRepository.someShops();
+		//shopsRepository.someShops();
 		return ShopsRepository.allShops;
 	
 	}
@@ -46,6 +46,7 @@ public class ShopsController {
 	public void addShop(@RequestBody Shop shop) {
 		
 		shopsRepository.addShop1(shop); 
+		
 		//shopsRepository.allShops.put(shop.getName(), shop);
 	}
 	
@@ -58,7 +59,14 @@ public class ShopsController {
 		//ShopsRepository.allShops.put(shop2.getName(), shop2);
 	}
 	
+	//reduce static variables; nothing apart from constants 
+	//move out business logic into the service 
+	//add missing functionality to update 
+	//hint for conc: concurrentHashMap put functionality: read what happens with put method 
+	//slides: what have i done, how i've done it;10-15 minutes to talk about it; 
+	//task, demo, code, what learned'
 	
+	//validate input and delegate to other bits; 
 
 	@Autowired
 	private LocationServiceGMaps locationVariable;

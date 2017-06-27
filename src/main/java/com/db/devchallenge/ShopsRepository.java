@@ -33,7 +33,7 @@ public class ShopsRepository {
 	
 	public ShopsRepository()
 	{
-		someShops();
+		//someShops();
 	}
 	
 

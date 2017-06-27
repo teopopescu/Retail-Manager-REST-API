@@ -45,9 +45,7 @@ import com.db.devchallenge.ShopsRepository;
 
 import junit.framework.Assert;
 
-/*
 
-*/
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { Application.class })
 @WebAppConfiguration
@@ -58,7 +56,7 @@ public class ShopsControllerTest {
 
 	private MockMvc mockMvc;
 	private ShopsRepository shopsRepository = new ShopsRepository();
-	private String json=" \"json\": \"request\"";
+	
 
 	@Before
 	public void setup() throws Exception {
@@ -88,15 +86,21 @@ public class ShopsControllerTest {
 
 	
 	
-
+//took someShops method out from constructor and controller
+	
+	
 	@Test
 	public void testGetShops() throws Exception { // APPLICATION_JSON_UTF8
+		
+		 mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16\"}"	))
+			.andExpect(MockMvcResultMatchers.status().isOk());
+		
 		mockMvc.perform(MockMvcRequestBuilders.get("/shops").accept(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(MockMvcResultMatchers.jsonPath(".name").value("Tesco"))
-				.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Address"))
-				.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("NW1 3HZ"));
+				.andExpect(MockMvcResultMatchers.jsonPath(".address").value("Hoy Street"))
+				.andExpect(MockMvcResultMatchers.jsonPath(".postcode").value("E16"));
 		
 
 	}
@@ -105,13 +109,17 @@ public class ShopsControllerTest {
 	public void testPostShop() throws Exception {
 		
 		
-		  mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16\"}"	))
+		  mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16 1XD\"}"	))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 
 	}
 
 	@Test
 	public void testNearestShop() throws Exception {
+		
+		mockMvc.perform(post("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16\"}"	))
+			.andExpect(MockMvcResultMatchers.status().isOk());
+		
 		mockMvc.perform(MockMvcRequestBuilders.get("/shops/findNearest").accept(MediaType.APPLICATION_JSON_VALUE)
 				.param("lat", "23").param("lng", "46")).andExpect(MockMvcResultMatchers.status().isOk())
 				 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
