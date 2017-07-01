@@ -81,6 +81,7 @@ public class ShopsController {
 			//reduce static variables; nothing apart from constants 
 			//move out business logic into the service 
 			//clean code; 
+	//put shops in a repo and make sure you get the closest shop; --do this and put that in a comment
 	//1H
 			
 			//slides: what have i done, how i've done it;10-15 minutes to talk about it; 

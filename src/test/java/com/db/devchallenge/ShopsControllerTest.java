@@ -127,11 +127,14 @@ public class ShopsControllerTest {
 		
 	}
 	
-	//put shops in a repo and make sure you get the closest shop; 
+	
+	
 	
 	@Test 
 	public void testConcurrency() throws Exception
 	{
+		 mockMvc.perform(put("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Address\",\"postcode\":\"NW1 3HZ\"}"	))
+			.andExpect(MockMvcResultMatchers.status().isOk());
 		
 		 mockMvc.perform(put("/shops").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON_UTF8).content("{\"name\":\"Tesco\",\"address\":\"Hoy Street\",\"postcode\":\"E16\"}"	))
 		.andExpect(MockMvcResultMatchers.status().isOk());
