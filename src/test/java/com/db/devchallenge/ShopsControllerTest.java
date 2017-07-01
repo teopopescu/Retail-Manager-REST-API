@@ -127,6 +127,7 @@ public class ShopsControllerTest {
 		
 	}
 	
+	//put shops in a repo and make sure you get the closest shop; 
 	
 	@Test 
 	public void testConcurrency() throws Exception

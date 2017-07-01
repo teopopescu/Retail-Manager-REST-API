@@ -23,6 +23,8 @@ public class LocationServiceTest {
 		assertThat(results.getLongitude()).isEqualTo(-0.0283023);
 	}
 	
+	//a test explicitly
+	
 	@Test
 	public void testHaversine() {
 		GeoLocation results = locationService.getGeoLocation("E14 5BT");

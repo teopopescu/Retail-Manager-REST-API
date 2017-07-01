@@ -41,14 +41,48 @@ public class ShopsController {
 	
 	}
 	
-
+/*
 	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void addShop(@RequestBody Shop shop) {
 		
 		shopsRepository.addShop1(shop); 
 		
 		//shopsRepository.allShops.put(shop.getName(), shop);
+	}*/
+	
+	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Shop addShop(@RequestBody Shop shop) {
+		
+		Shop shop1 = new Shop();
+		shop1=shop;
+	
+		shopsRepository.addShop1(shop); 
+		//shopsRepository.allShops.put(shop.getName(), shop);
+		
+		return shop1;
+		
 	}
+	
+	//TO DO 
+			//reduce static variables; nothing apart from constants 
+			//move out business logic into the service 
+			//clean code;
+			
+			//slides: what have i done, how i've done it;10-15 minutes to talk about it; 
+			//task, demo, code, what learned'
+			
+			//validate input and delegate to other bits; 
+		
+		/*
+		Doing
+		//hint for conc: concurrentHashMap put functionality: read what happens with put method 
+		//add missing functionality to update 
+			
+		Done 
+			
+		
+		*/
+	
 	
 	
 	@RequestMapping(value = "/shops", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -59,14 +93,9 @@ public class ShopsController {
 		//ShopsRepository.allShops.put(shop2.getName(), shop2);
 	}
 	
-	//reduce static variables; nothing apart from constants 
-	//move out business logic into the service 
-	//add missing functionality to update 
-	//hint for conc: concurrentHashMap put functionality: read what happens with put method 
-	//slides: what have i done, how i've done it;10-15 minutes to talk about it; 
-	//task, demo, code, what learned'
 	
-	//validate input and delegate to other bits; 
+	
+	
 
 	@Autowired
 	private LocationServiceGMaps locationVariable;
