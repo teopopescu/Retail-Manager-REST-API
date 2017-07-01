@@ -40,16 +40,11 @@ public class ShopsController {
 		return ShopsRepository.allShops;
 	
 	}
-	
-/*
-	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void addShop(@RequestBody Shop shop) {
 		
-		shopsRepository.addShop1(shop); 
-		
-		//shopsRepository.allShops.put(shop.getName(), shop);
-	}*/
+	///--------IGNORE VERSION ABOVE 
 	
+	//PREVIOUS WORKING VERSION OF POST
+	/*
 	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Shop addShop(@RequestBody Shop shop) {
 		
@@ -61,25 +56,48 @@ public class ShopsController {
 		
 		return shop1;
 		
-	}
+	}*/
+	
+	//TRY ON GETTING PREVIOUS VALUE <--DONE
+	@RequestMapping(value = "/shops", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Shop addShop(@RequestBody Shop shop) {
+		
+		shopsRepository.addShop1(shop); 
+		
+		return ShopsRepository.allShops.put(shop.getName(), shop);
+		
+		/*
+		if (!ShopsRepository.allShops.containsKey(shop1.getName()))
+
+			return ShopsRepository.allShops.put(shop.getName(), shop);
+		else
+			return ShopsRepository.allShops.put(shop1.getName(), shop1);	
+		*/
+		}
+		
+	
 	
 	//TO DO 
 			//reduce static variables; nothing apart from constants 
 			//move out business logic into the service 
-			//clean code;
+			//clean code; 
+	//1H
 			
 			//slides: what have i done, how i've done it;10-15 minutes to talk about it; 
 			//task, demo, code, what learned'
-			
+
+	//1H
+		//ANSWER QUESTIONS
+	//ANSWER: WALK ME THROUGH YOUR CODE! 
 			//validate input and delegate to other bits; 
 		
 		/*
 		Doing
 		//hint for conc: concurrentHashMap put functionality: read what happens with put method 
-		//add missing functionality to update 
+		
 			
 		Done 
-			
+			//add missing functionality to update 
 		
 		*/
 	

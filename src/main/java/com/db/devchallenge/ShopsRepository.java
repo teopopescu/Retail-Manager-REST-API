@@ -50,7 +50,8 @@ public class ShopsRepository {
 
 		shop2.setLatitude(locationService.getGeoLocation(shop2.getPostcode()).getLatitude());
 		shop2.setLongitude(locationService.getGeoLocation(shop2.getPostcode()).getLongitude());
-		allShops.put(shop2.getName(), shop2);
+		//allShops.put(shop2.getName(), shop2);
+		allShops.putIfAbsent(shop2.getName(), shop2);
  
 	}
 
