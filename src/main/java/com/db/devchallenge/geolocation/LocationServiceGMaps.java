@@ -23,35 +23,31 @@ public class LocationServiceGMaps implements LocationService {
 
 	}
 
-	// private final static Logger LOG =
-	// LoggerFactory.getLogger(LocationServiceGMaps.class);
-
-	// @Value -> to inject a property (leave until later)
 	private String apiKey = "AIzaSyDRfDEfT8_yzJsneS3CwodB8UDotytBB8E";
 
 	@Override
 	public GeoLocation getGeoLocation(String postcode) {
 
-		GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyDRfDEfT8_yzJsneS3CwodB8UDotytBB8E");
-		
+		GeoApiContext context = new GeoApiContext().setApiKey(apiKey);
+
 		GeocodingResult[] results = null;
-	
+
 		try {
 			results = GeocodingApi.geocode(context, postcode).await();
 
 		} catch (ApiException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+	
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 
 		GeoLocation object2 = new GeoLocation(results[0].geometry.location.lng, results[0].geometry.location.lat);
-		
+
 		return object2;
 	}
 

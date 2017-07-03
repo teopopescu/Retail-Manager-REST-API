@@ -29,48 +29,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopsRepository {
 
 	private LocationServiceGMaps locationService = new LocationServiceGMaps();
-	public static final ConcurrentHashMap<String, Shop> allShops = new ConcurrentHashMap<String,Shop>(200);
-	
-	public ShopsRepository()
-	{
-		//someShops();
-	}
-	
+	public static final ConcurrentHashMap<String, Shop> allShops = new ConcurrentHashMap<String, Shop>(200);
 
-	public void getAllShops() {
-		for (Map.Entry<String, Shop> entry : allShops.entrySet()) {
-			System.out.println("Shop:  " + entry.getKey() + ", Shop details = " + entry.getValue());
-		}
-
+	public ShopsRepository() {
+		
 	}
-	
-	public void addShop1(Shop shop2) {
+
+	public void addShop(Shop shop2) {
 
 		GeoLocation geolocation = locationService.getGeoLocation(shop2.getPostcode());
 
-		shop2.setLatitude(locationService.getGeoLocation(shop2.getPostcode()).getLatitude());
-		shop2.setLongitude(locationService.getGeoLocation(shop2.getPostcode()).getLongitude());
-		//allShops.put(shop2.getName(), shop2);
+		shop2.setLatitude(geolocation.getLatitude());
+		shop2.setLongitude(geolocation.getLongitude());
+
 		allShops.putIfAbsent(shop2.getName(), shop2);
- 
-	}
-
-	
-	public void someShops()
-
-	{
-		Shop shop1 = new Shop();
-		
-	shop1.setName("Tesco");
-	shop1.setAddress("Address");
-	shop1.setPostcode("NW1 3HZ");
-	
-	
-		addShop1(shop1);
-		//allShops.put(shop1.getName(), shop1);
-		
 
 	}
 
-	
+
 }

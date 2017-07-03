@@ -13,6 +13,5 @@ public class GeoLocation {
 		this.longitude = lng;
 
 	}
-	
-	
+
 }
